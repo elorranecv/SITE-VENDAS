@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achadinhos by Lo — curadoria de Shopee e Mercado Livre</title>
+<meta name="description" content="Seleção de produtos de casa, cozinha, beleza e presentes da Shopee e do Mercado Livre.">
+<meta name="theme-color" content="#F2EFE9">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =================================================================
+   ACHADINHOS BY LO — versão editorial
+   Produtos e categorias ficam no <script> no fim do arquivo.
+   ================================================================= */
+
+/* 1) BASE --------------------------------------------------------- */
+:root{
+  --sand:      #F2EFE9;  /* fundo da página */
+  --sand-deep: #E7E3DA;  /* faixas e painéis */
+  --stone:     #DCD7CC;  /* fundo das fotos de produto */
+  --ink:       #191713;  /* texto e botões */
+  --ink-soft:  #6E685E;  /* texto secundário */
+  --line:      #D6D0C5;
+  --rust:      #8F5537;  /* único acento: desconto */
+
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans:  "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --page: 1440px;
+  --gutter: 48px;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin: 0;
+  background: var(--sand);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img{ max-width: 100%; display: block; }
+a{ color: inherit; text-decoration: none; }
+ul{ margin: 0; padding: 0; list-style: none; }
+button{ font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+:focus-visible{ outline: 1.5px solid var(--ink); outline-offset: 4px; }
+
+h1, h2, h3, .serif{
+  font-family: var(--serif);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+}
+
+.page{ max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+.section{ padding: 88px 0; }
+.section--tight{ padding: 56px 0; }
+.section--deep{ background: var(--sand-deep); }
+
+/* rótulo pequeno espaçado — a linguagem da referência */
+.label{
+  font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 400;
+}
+
+.title{ font-size: clamp(1.9rem, 3vw, 2.6rem); }
+.section-top{
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 40px;
+  padding-bottom: 18px; border-bottom: 1px solid var(--line);
+}
+.section-top p{ margin: 8px 0 0; color: var(--ink-soft); max-width: 46ch; }
+
+/* 2) BOTÕES ------------------------------------------------------- */
+.btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 15px 34px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--sand);
+  transition: background-color .25s ease, color .25s ease;
+}
+.btn:hover{ background: transparent; color: var(--ink); }
+.btn--light{ background: var(--sand); color: var(--ink); }
+.btn--light:hover{ background: var(--ink); color: var(--sand); }
+.btn--line{ background: transparent; color: var(--ink); }
+.btn--line:hover{ background: var(--ink); color: var(--sand); }
+.btn--sm{ padding: 12px 24px; }
+.btn--full{ width: 100%; }
+
+.link-underline{
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  border-bottom: 1px solid var(--ink); padding-bottom: 4px;
+}
+
+@media (prefers-reduced-motion: reduce){ *{ transition: none !important; animation: none !important; } }
+
+/* 3) TOPO --------------------------------------------------------- */
+.announce{
+  background: var(--ink); color: rgba(242,239,233,.9);
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.announce .page{ display: flex; align-items: center; justify-content: space-between; height: 44px; gap: 20px; }
+.announce span:last-child{ color: rgba(242,239,233,.55); }
+
+.header{ position: sticky; top: 0; z-index: 50; background: var(--sand); border-bottom: 1px solid var(--line); }
+.header .page{ display: flex; align-items: center; justify-content: space-between; height: 84px; gap: 32px; }
+.wordmark{ font-family: var(--serif); font-size: 1.55rem; letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; }
+.wordmark small{ display: block; font-family: var(--sans); font-size: 9.5px; letter-spacing: 0.3em; color: var(--ink-soft); margin-top: 2px; }
+.nav{ display: flex; gap: 38px; }
+.nav a{ font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 0; border-bottom: 1px solid transparent; }
+.nav a:hover{ border-color: var(--ink); }
+.header-tools{ display: flex; align-items: center; gap: 22px; }
+.icon{ display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
+.burger{ display: none; }
+
+.searchbar{ max-height: 0; overflow: hidden; background: var(--sand-deep); transition: max-height .25s ease; }
+.searchbar.open{ max-height: 90px; }
+.searchbar .page{ display: flex; align-items: center; gap: 16px; padding-top: 22px; padding-bottom: 22px; }
+.searchbar input{
+  flex: 1; border: none; border-bottom: 1px solid var(--ink); background: transparent;
+  font-family: var(--serif); font-size: 1.3rem; padding: 6px 0; color: var(--ink);
+}
+.searchbar input::placeholder{ color: var(--ink-soft); }
+
+.drawer{ display: none; flex-direction: column; background: var(--sand); border-bottom: 1px solid var(--line); }
+.drawer.open{ display: flex; }
+.drawer a{ padding: 16px var(--gutter); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; border-top: 1px solid var(--line); }
+
+/* 4) HERÓI -------------------------------------------------------- */
+.hero{ display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+.hero-text{ display: flex; flex-direction: column; justify-content: center; padding: 80px var(--gutter); max-width: 720px; margin-left: auto; width: 100%; }
+.hero-text h1{ font-size: clamp(2.6rem, 4.6vw, 4rem); margin: 22px 0 0; }
+.hero-text h1 span{ display: block; }
+.hero-text p{ margin: 26px 0 0; color: var(--ink-soft); max-width: 34ch; }
+.hero-actions{ display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; }
+/* Para usar uma foto de campanha em vez do painel de produto:
+   troque a <figure class="hero-image"> por uma <img> com a foto. */
+.hero-image{
+  background: var(--stone); display: flex; align-items: center; justify-content: center;
+  align-self: center; justify-self: center; overflow: hidden;
+  width: min(300px, 85%); height: 200px; aspect-ratio: 1/1; padding: 0; margin: 0 var(--gutter) 0 0;
+}
+.hero-image img{ width: 120%; height: 100%; object-fit: contain; }
+
+/* 5) VITRINE POR CATEGORIA ---------------------------------------- */
+.showcase-top{ margin-bottom: 28px; }
+.showcase-top h2{ font-size: clamp(1.9rem, 3vw, 2.6rem); }
+.cat-row{
+  display: flex; flex-wrap: wrap; gap: 14px 16px;
+  padding-bottom: 32px; margin-bottom: 44px; border-bottom: 1px solid var(--line);
+}
+.cat-row li{ flex: 0 0 auto; }
+.cat-row button{
+  font-family: var(--serif); font-size: 1.35rem; letter-spacing: 0.01em;
+  color: var(--ink-soft); padding: 4px 2px; border-bottom: 1px solid transparent;
+  transition: color .2s ease, border-color .2s ease;
+}
+.cat-row button:hover{ color: var(--ink); }
+.cat-row button.on{ color: var(--ink); border-color: var(--ink); }
+.cat-row li:not(:last-child) button::after{
+  content: "/"; display: inline-block; margin-left: 16px; color: var(--line); font-size: 1rem;
+}
+
+/* 6) PRODUTOS ------------------------------------------------------ */
+.grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 44px 26px; }
+.grid--4{ grid-template-columns: repeat(4, 1fr); }
+.rail{ display: flex; gap: 26px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x proximity; }
+.rail .item{ flex: 0 0 250px; scroll-snap-align: start; }
+
+.item{ display: flex; flex-direction: column; }
+.item__media{
+  position: relative; display: block; aspect-ratio: 3/4; background: var(--stone);
+  overflow: hidden; margin-bottom: 16px;
+}
+.item__media img{ width: 100%; height: 100%; object-fit: contain; padding: 16px; mix-blend-mode: multiply; transition: transform .6s cubic-bezier(.2,.8,.3,1); }
+.item:hover .item__media img{ transform: scale(1.04); }
+.item__off{ position: absolute; top: 12px; left: 12px; font-size: 10px; letter-spacing: 0.12em; color: var(--rust); }
+.item__store{ font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 6px; }
+.item__name{ font-family: var(--sans); font-size: 13.5px; font-weight: 400; line-height: 1.45; margin: 0; }
+.item__note{ margin: 6px 0 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+.item__price{ margin-top: 10px; display: flex; align-items: baseline; gap: 10px; }
+.item__now{ font-family: var(--serif); font-size: 1.25rem; }
+.item__was{ font-size: 12px; color: var(--ink-soft); text-decoration: line-through; }
+.item__cta{ margin-top: 14px; }
+
+/* 7) FAIXA DE SERVIÇOS --------------------------------------------- */
+.assurance{ background: var(--sand-deep); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.assurance .page{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; padding-top: 34px; padding-bottom: 34px; }
+.assure{ display: flex; gap: 14px; align-items: flex-start; }
+.assure svg{ flex: 0 0 auto; margin-top: 2px; }
+.assure h3{ font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; margin: 0 0 3px; }
+.assure p{ margin: 0; font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+
+/* 8) CATÁLOGO ------------------------------------------------------ */
+.filters{ display: flex; flex-wrap: wrap; gap: 26px; align-items: center; margin-bottom: 44px; }
+.filters select{
+  font-family: inherit; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink); background: transparent; border: none; border-bottom: 1px solid var(--line);
+  padding: 8px 20px 8px 0; cursor: pointer;
+}
+.filters .tally{ margin-left: auto; }
+.more{ display: flex; justify-content: center; margin-top: 60px; }
+.blank{ padding: 60px 0; text-align: center; color: var(--ink-soft); }
+.blank p{ margin: 0 0 20px; }
+
+/* 9) RANKING ------------------------------------------------------- */
+.rank{ border-top: 1px solid var(--line); }
+.rank a{ display: grid; grid-template-columns: 46px 88px 1fr auto; align-items: center; gap: 26px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.rank a:hover .rank-name{ text-decoration: underline; text-underline-offset: 4px; }
+.rank-num{ font-family: var(--serif); font-size: 1.5rem; color: var(--ink-soft); }
+.rank-thumb{ width: 88px; height: 110px; background: var(--stone); overflow: hidden; }
+.rank-thumb img{ width: 100%; height: 100%; object-fit: contain; padding: 8px; mix-blend-mode: multiply; }
+.rank-name{ font-size: 13.5px; }
+.rank-store{ font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-top: 5px; display: block; }
+.rank-price{ font-family: var(--serif); font-size: 1.15rem; white-space: nowrap; }
+
+/* 10) INSTAGRAM ---------------------------------------------------- */
+.invite{ background: var(--ink); color: var(--sand); text-align: center; padding: 108px var(--gutter); }
+.invite .label{ color: rgba(242,239,233,.55); }
+.invite h2{ font-size: clamp(2rem, 4vw, 3.2rem); max-width: 20ch; margin: 20px auto 0; }
+.invite p{ color: rgba(242,239,233,.68); max-width: 44ch; margin: 22px auto 40px; }
+
+/* 11) RODAPÉ ------------------------------------------------------- */
+.footer{ padding: 72px 0 34px; }
+.footer-grid{ display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+.footer-grid p{ margin: 18px 0 0; color: var(--ink-soft); max-width: 32ch; font-size: 13px; }
+.footer-col h3{ font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); font-weight: 400; margin: 0 0 18px; }
+.footer-col li{ margin-bottom: 11px; }
+.footer-col a{ font-size: 13px; }
+.footer-col a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+.disclosure{ padding-top: 28px; font-size: 11.5px; color: var(--ink-soft); line-height: 1.7; max-width: 92ch; }
+
+/* 12) RESPONSIVO --------------------------------------------------- */
+@media (max-width: 1100px){
+  :root{ --gutter: 28px; }
+  .nav{ gap: 24px; }
+  .grid--4{ grid-template-columns: repeat(2, 1fr); }
+  .footer-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px){
+  .nav{ display: none; }
+  .burger{ display: flex; }
+  .hero{ grid-template-columns: 1fr; min-height: 0; }
+  .hero-image{ order: -1; width: min(300px, 75%); aspect-ratio: 1/1; padding: 0; margin: 0 auto; }
+  .hero-text{ padding: 56px var(--gutter) 64px; }
+  .section{ padding: 60px 0; }
+  .assurance .page{ grid-template-columns: 1fr 1fr; gap: 24px; }
+  .announce span:last-child{ display: none; }
+  .announce .page{ justify-content: center; }
+}
+@media (max-width: 560px){
+  :root{ --gutter: 20px; }
+  .grid, .grid--4{ grid-template-columns: 1fr 1fr; gap: 32px 16px; }
+  .item__media{ margin-bottom: 12px; }
+  .rank a{ grid-template-columns: 30px 66px 1fr; gap: 16px; }
+  .rank-thumb{ width: 66px; height: 82px; }
+  .rank-price{ grid-column: 3; }
+  .footer-grid{ grid-template-columns: 1fr; gap: 36px; }
+  .filters{ gap: 18px; }
+  .filters .tally{ margin-left: 0; }
+  .invite{ padding: 72px var(--gutter); }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= TOPO ================= -->
+<div class="announce">
+  <div class="page">
+    <span>Achadinhos novos toda semana</span>
+    <span>Shopee e Mercado Livre</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="page">
+    <a href="#inicio" class="wordmark">Achadinhos<small>by Lo</small></a>
+
+    <nav class="nav" aria-label="Seções">
+      <a href="#vitrine">Vitrine</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#shopee">Shopee</a>
+      <a href="#mercado-livre">Mercado Livre</a>
+      <a href="#queridinhos">Queridinhos</a>
+    </nav>
+
+    <div class="header-tools">
+      <button class="icon" id="search-toggle" aria-label="Buscar" aria-expanded="false" aria-controls="searchbar">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      </button>
+      <!-- troque pelo link real do seu perfil -->
+      <a class="icon" href="https://instagram.com/SEU_PERFIL_AQUI" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <button class="icon burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="searchbar" id="searchbar">
+    <div class="page">
+      <input type="search" id="search" placeholder="Buscar: taça, air fryer, legging…" aria-label="Buscar achadinho">
+      <span class="label">Enter para ver</span>
+    </div>
+  </div>
+
+  <nav class="drawer" id="drawer" aria-label="Menu">
+    <a href="#vitrine">Vitrine</a>
+    <a href="#ofertas">Ofertas</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#shopee">Shopee</a>
+    <a href="#mercado-livre">Mercado Livre</a>
+    <a href="#queridinhos">Queridinhos</a>
+    <a href="https://instagram.com/SEU_PERFIL_AQUI" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+</header>
+
+<main id="inicio">
+
+  <!-- ================= HERÓI ================= -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="label">Seleção da semana</p>
+      <h1><span>Coisa boa,</span><span>preço honesto.</span></h1>
+      <p>Garimpo na Shopee e no Mercado Livre e deixo aqui só o que eu compraria de novo.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#catalogo">Ver o catálogo</a>
+        <a class="btn btn--light" href="#ofertas">Ofertas de hoje</a>
+      </div>
+    </div>
+    <figure class="hero-image"><img id="hero-img" alt="Compre com confiança na Shopee e no Mercado Livre" src="data:image/webp;base64,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"></figure>
+  </section>
+
+  <!-- ================= VITRINE POR CATEGORIA ================= -->
+  <section class="section" id="vitrine">
+    <div class="page">
+      <div class="showcase-top">
+        <h2>Por categoria</h2>
+      </div>
+      <ul class="cat-row" id="cat-list"></ul>
+      <div class="grid grid--4" id="showcase-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= FAIXA DE SERVIÇOS ================= -->
+  <section class="assurance">
+    <div class="page">
+      <div class="assure">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5 12 12.5l8.7-5"/><path d="M12 12.5V21"/></svg>
+        <div><h3>Garimpo de verdade</h3><p>Só entra aqui o que eu olharia para comprar.</p></div>
+      </div>
+      <div class="assure">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+        <div><h3>Preço conferido</h3><p>Reviso os valores antes de publicar.</p></div>
+      </div>
+      <div class="assure">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <div><h3>Compra na loja</h3><p>O pagamento acontece na Shopee ou no Mercado Livre.</p></div>
+      </div>
+      <div class="assure">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div><h3>Dúvida sobre um item</h3><p>Me chama no Instagram que eu respondo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OFERTAS ================= -->
+  <section class="section" id="ofertas">
+    <div class="page">
+      <div class="section-top">
+        <div>
+          <p class="label">Maiores descontos</p>
+          <h2 class="title">Ofertas de hoje</h2>
+        </div>
+        <p>Os preços mudam o tempo todo nas duas lojas. Se gostou, corre.</p>
+      </div>
+      <div class="rail" id="deals"></div>
+    </div>
+  </section>
+
+  <!-- ================= CATÁLOGO ================= -->
+  <section class="section section--deep" id="catalogo">
+    <div class="page">
+      <div class="section-top">
+        <div>
+          <p class="label">Tudo que está no ar</p>
+          <h2 class="title">Catálogo</h2>
+        </div>
+      </div>
+
+      <div class="filters">
+        <select id="f-cat" aria-label="Categoria"><option value="">Todas as categorias</option></select>
+        <select id="f-store" aria-label="Loja">
+          <option value="">Todas as lojas</option>
+          <option value="shopee">Shopee</option>
+          <option value="mercadolivre">Mercado Livre</option>
+        </select>
+        <select id="f-price" aria-label="Faixa de preço">
+          <option value="">Qualquer preço</option>
+          <option value="0-30">Até R$ 30</option>
+          <option value="30-60">R$ 30 a R$ 60</option>
+          <option value="60-120">R$ 60 a R$ 120</option>
+          <option value="120-999999">Acima de R$ 120</option>
+        </select>
+        <select id="f-sort" aria-label="Ordenar">
+          <option value="desconto">Maior desconto</option>
+          <option value="barato">Mais barato</option>
+          <option value="caro">Mais caro</option>
+          <option value="nome">Nome (A–Z)</option>
+        </select>
+        <span class="label tally" id="tally"></span>
+      </div>
+
+      <div class="grid" id="catalog"></div>
+      <div class="more"><button class="btn btn--line" id="load-more">Ver mais</button></div>
+    </div>
+  </section>
+
+  <!-- ================= POR LOJA ================= -->
+  <section class="section" id="shopee">
+    <div class="page">
+      <div class="section-top">
+        <div>
+          <p class="label">Marketplace</p>
+          <h2 class="title">Shopee</h2>
+        </div>
+        <button class="link-underline" data-all="shopee">Ver tudo da Shopee</button>
+      </div>
+      <div class="rail" id="rail-shopee"></div>
+    </div>
+  </section>
+
+  <section class="section section--tight" id="mercado-livre">
+    <div class="page">
+      <div class="section-top">
+        <div>
+          <p class="label">Marketplace</p>
+          <h2 class="title">Mercado Livre</h2>
+        </div>
+        <button class="link-underline" data-all="mercadolivre">Ver tudo do Mercado Livre</button>
+      </div>
+      <div class="rail" id="rail-meli"></div>
+    </div>
+  </section>
+
+  <!-- ================= QUERIDINHOS ================= -->
+  <section class="section" id="queridinhos">
+    <div class="page">
+      <div class="section-top">
+        <div>
+          <p class="label">Mais procurados</p>
+          <h2 class="title">Queridinhos da semana</h2>
+        </div>
+      </div>
+      <div class="rank" id="rank"></div>
+    </div>
+  </section>
+
+  <!-- ================= INSTAGRAM ================= -->
+  <section class="invite">
+    <p class="label">Instagram</p>
+    <h2>Os próximos achadinhos saem primeiro por lá</h2>
+    <p>Todo dia eu mostro o que encontrei, com preço, opinião honesta e o link direto.</p>
+    <a class="btn btn--light" href="https://instagram.com/SEU_PERFIL_AQUI" target="_blank" rel="noopener">Seguir no Instagram</a>
+  </section>
+
+</main>
+
+<!-- ================= RODAPÉ ================= -->
+<footer class="footer">
+  <div class="page">
+    <div class="footer-grid">
+      <div>
+        <span class="wordmark">Achadinhos<small>by Lo</small></span>
+        <p>Curadoria independente de produtos da Shopee e do Mercado Livre, feita por quem também compra.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Navegue</h3>
+        <ul>
+          <li><a href="#vitrine">Vitrine</a></li>
+          <li><a href="#ofertas">Ofertas</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#queridinhos">Queridinhos</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Lojas</h3>
+        <ul>
+          <li><a href="#shopee">Shopee</a></li>
+          <li><a href="#mercado-livre">Mercado Livre</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Institucional</h3>
+        <ul>
+          <li><a href="#">Política de privacidade</a></li>
+          <li><a href="#">Termos de uso</a></li>
+          <li><a href="mailto:contato@seudominio.com.br">Falar com a Lo</a></li>
+          <li><a href="https://instagram.com/SEU_PERFIL_AQUI" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclosure">
+      Este site participa dos programas de afiliados da Shopee e do Mercado Livre. Alguns links são de afiliado, o que significa que posso receber uma comissão se você comprar por eles, sem nenhum custo a mais para você. Preços e disponibilidade mudam sem aviso e valem os que estiverem na loja no momento da compra.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* =================================================================
+   ÁREA DE EDIÇÃO — categorias e produtos
+   ================================================================= */
+const CATEGORIES = [
+  { id: "cozinha",          label: "Cozinha" },
+  { id: "casa",             label: "Casa e organização" },
+  { id: "banho",            label: "Cama, mesa e banho" },
+  { id: "banheiro",         label: "Banheiro" },
+  { id: "limpeza",          label: "Limpeza" },
+  { id: "eletrodomesticos", label: "Eletrodomésticos" },
+  { id: "eletronicos",      label: "Eletrônicos" },
+  { id: "beleza",           label: "Beleza" },
+  { id: "cosmeticos",       label: "Perfumes e cremes" },
+  { id: "moda",             label: "Moda" },
+  { id: "moda-fitness",     label: "Moda fitness" },
+  { id: "infantil",         label: "Infantil" },
+  { id: "pets",             label: "Pets" },
+  { id: "presentes",        label: "Presentes" },
+  { id: "esporte-lazer",    label: "Esporte e lazer" },
+  { id: "natal",            label: "Natal" },
+];
+
+/* Molde para um produto novo:
+   { id:"prod-99", name:"", category:"cozinha", store:"shopee",
+     price:0, oldPrice:0, note:"", image:"", link:"", favorite:79 },
+   O desconto é calculado sozinho a partir do oldPrice.          */
+const PRODUCTS = [
+  { id:"prod-01", name:"Jogo 6 taças de sobremesa 250 ml Dumiat", category:"cozinha", store:"shopee", price:59.99, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820lt-mnlkd066molg47.webp", link:"https://s.shopee.com.br/5q833pMCsG", favorite:90 },
+  { id:"prod-02", name:"Kit comedouro 3 kg e bebedouro 3 L automático para cães e gatos", category:"pets", store:"shopee", price:52.91, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820lv-mqhuu3g1u4n612.webp", link:"https://s.shopee.com.br/3Vk8mJdFII", favorite:74 },
+  { id:"prod-03", name:"Rastreador bluetooth para chaves, pets e objetos (iOS)", category:"pets", store:"shopee", price:17.88, oldPrice:29.99, note:"O preço muda conforme a quantidade escolhida.", image:"https://down-br.img.susercontent.com/file/sg-11134201-824hu-mfpklbyxygb223.webp", link:"https://s.shopee.com.br/1LfeChpTID", favorite:74 },
+  { id:"prod-04", name:"Espremedor elétrico recarregável para laranja e limão", category:"cozinha", store:"shopee", price:60.69, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-8257s-msgl72nok4jp86.webp", link:"https://s.shopee.com.br/7VGHYgl6UH", favorite:82 },
+  { id:"prod-05", name:"Jogo de xícaras de café com pires de madeira em coração", category:"cozinha", store:"shopee", price:68.00, oldPrice:110.00, note:"O preço muda conforme a quantidade escolhida.", image:"https://down-br.img.susercontent.com/file/br-11134201-820lf-mqxa6g4hv9qf8b.webp", link:"https://s.shopee.com.br/6L4KAReUiS", favorite:95 },
+  { id:"prod-06", name:"Jogo de 5 potes e tigelas de inox com tampa", category:"cozinha", store:"shopee", price:29.40, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-7rau4-mb3xah5g8pyu5c.webp", link:"https://s.shopee.com.br/AKaSvol8Ua", favorite:95 },
+  { id:"prod-07", name:"Jogo de panelas de cerâmica com tampa de vidro, 5 peças", category:"cozinha", store:"shopee", price:237.41, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-820oh-mnmf2hevz2ti80.webp", link:"https://s.shopee.com.br/1Vz4PcHgH3", favorite:95 },
+  { id:"prod-08", name:"Cozedor de ovos elétrico portátil a vapor", category:"cozinha", store:"shopee", price:38.97, oldPrice:100.00, note:"O preço muda conforme a cor e a voltagem.", image:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-mbxi2wd1amvtfc.webp", link:"https://s.shopee.com.br/Ln71YxhWv", favorite:68 },
+  { id:"prod-09", name:"Panela de pressão elétrica digital 5 L Kian", category:"cozinha", store:"shopee", price:301.15, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-81zte-mkwjz2y8mxoge4.webp", link:"https://s.shopee.com.br/5fodNPTNwV", favorite:55 },
+  { id:"prod-10", name:"Organizador de pia 3 em 1 em inox com dispenser de detergente", category:"cozinha", store:"shopee", price:34.99, oldPrice:89.90, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820m5-mogwgauyccg0df.webp", link:"https://s.shopee.com.br/AAH3fJyjIK", favorite:88 },
+  { id:"prod-11", name:"Jogo de taças de vidro Diamond 340 ml", category:"cozinha", store:"shopee", price:36.60, note:"O preço muda conforme a quantidade escolhida.", image:"https://down-br.img.susercontent.com/file/br-11134207-820lv-mrbrnpph2s5ia6.webp", link:"https://s.shopee.com.br/7VGHYZIzn2", favorite:79 },
+  { id:"prod-12", name:"Conjunto 6 xícaras Graffiato 170 ml com suporte dourado", category:"cozinha", store:"shopee", price:64.99, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820li-mrn5rdu3r5l1bd.webp", link:"https://s.shopee.com.br/20vLwUPEoo", favorite:79 },
+  { id:"prod-13", name:"Faqueiro de sobremesa dourado em inox, 24 peças", category:"cozinha", store:"shopee", price:45.88, oldPrice:119.80, note:"O preço muda conforme a cor e o material.", image:"https://down-br.img.susercontent.com/file/br-11134207-81zun-mkltxsstdtkzf2.webp", link:"https://s.shopee.com.br/9Khwg2mZP7", favorite:79 },
+  { id:"prod-14", name:"Borrifador de azeite premium 100 ml", category:"cozinha", store:"shopee", price:11.88, oldPrice:25.98, note:"O preço muda conforme a quantidade escolhida.", image:"https://down-br.img.susercontent.com/file/br-11134207-81ztc-mj421epqq0ozc6.webp", link:"https://s.shopee.com.br/112olGvlF7", favorite:79 },
+  { id:"prod-15", name:"Kit 4 toalhas de banho felpudas 100% algodão", category:"banho", store:"shopee", price:79.80, oldPrice:97.90, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820mh-mn5sjj3ojr429b.webp", link:"https://s.shopee.com.br/6AkuumkQ0D", favorite:79 },
+  { id:"prod-16", name:"Kit 3 conjuntos infantis canelados, do 2 ao 8", category:"infantil", store:"shopee", price:34.80, note:"O preço muda conforme a cor e o tamanho.", image:"https://down-br.img.susercontent.com/file/br-11134207-820lz-mslkdn2li1ad8f.webp", link:"https://s.shopee.com.br/9AOWUJhWyl", favorite:79 },
+  { id:"prod-17", name:"Conjunto infantil cropped e short-saia", category:"infantil", store:"shopee", price:39.99, note:"O preço muda conforme a cor e a quantidade.", image:"https://down-br.img.susercontent.com/file/br-11134207-7r98o-lz7wonspcjltbc.webp", link:"https://s.shopee.com.br/1AHZXwoDV", favorite:79 },
+  { id:"prod-18", name:"Jogo de frigideiras 3 peças 14, 18 e 24 cm", category:"cozinha", store:"mercadolivre", price:54.90, oldPrice:74.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_754746-MLA105899085071_012026-F.webp", link:"https://meli.la/1kXcaub", favorite:79 },
+  { id:"prod-19", name:"Mop spray com reservatório, rotação 360° e cabo de inox", category:"limpeza", store:"mercadolivre", price:31.00, oldPrice:99.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_857327-MLA99446953760_112025-F.webp", link:"https://meli.la/248ZU8L", favorite:79 },
+  { id:"prod-20", name:"Suqueira transparente 4,5 L", category:"cozinha", store:"mercadolivre", price:46.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_975874-MLA110746749080_052026-F.webp", link:"https://meli.la/28wP7M7", favorite:79 },
+  { id:"prod-21", name:"Copo térmico de inox 1,2 L com tampa e canudo", category:"cozinha", store:"mercadolivre", price:46.95, oldPrice:79.95, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_873198-MLB109472210619_032026-F-copo-garrafa-termica-12l-inox-com-tampa-e-canudo-gigante.webp", link:"https://meli.la/1dai1Vx", favorite:79 },
+  { id:"prod-22", name:"Smartphone Samsung Galaxy A17 128GB (4GB Ram+4GB Ram Plus) Com IA, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Preto Black", category:"eletronicos", store:"mercadolivre", price:806.55, oldPrice:849.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_915275-MLA117139369801_092026-F.webp", link:"https://meli.la/1M2rwv3", favorite:79 },
+  { id:"prod-23", name:"Toalha de banho grande de algodão premium 72x140 cm", category:"banho", store:"shopee", price:59.97, oldPrice:99.00, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820mf-mqz19gr8hgxz11.webp", link:"https://s.shopee.com.br/6fhFJUutgQ", favorite:79 },
+  { id:"prod-24", name:"Árvore de Natal pinheiro premium de 1,80 m a 3 m", category:"natal", store:"shopee", price:160.47, note:"O preço muda conforme o tamanho e o número de galhos.", image:"https://down-br.img.susercontent.com/file/br-11134207-820lz-msgd4t6d31mua0.webp", link:"https://s.shopee.com.br/80Ccu3e7mv", favorite:79 },
+  { id:"prod-25", name:"Marmita elétrica térmica portátil 1,5 L bivolt", category:"cozinha", store:"shopee", price:61.98, oldPrice:99.90, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820m1-mp3vkhllsi6856.webp", link:"https://s.shopee.com.br/5LBrjHyJS2", favorite:79 },
+  { id:"prod-26", name:"Forma de pudim e bolo quadrada com furo central 20x7 cm", category:"cozinha", store:"shopee", price:26.90, oldPrice:28.98, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820m1-mnyacu2xl7uob6.webp", link:"https://s.shopee.com.br/LnBm9XjaD", favorite:79 },
+  { id:"prod-27", name:"Pipoqueira elétrica sem óleo 110 V e 220 V", category:"eletrodomesticos", store:"shopee", price:79.90, oldPrice:150.00, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-7rdwi-lzgleioix9fre3.webp", link:"https://s.shopee.com.br/1Lfiy2FJGi", favorite:79 },
+  { id:"prod-28", name:"Tábua de petiscos em madeira com divisórias", category:"cozinha", store:"shopee", price:27.90, note:"O preço muda conforme o formato escolhido.", image:"https://down-br.img.susercontent.com/file/br-11134207-820lz-msj3cy0l0xs651.webp", link:"https://s.shopee.com.br/20vPlJT9xo", favorite:79 },
+  { id:"prod-29", name:"Kit 6 formas de silicone para air fryer com alça", category:"cozinha", store:"shopee", price:14.90, oldPrice:19.90, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-7rdvq-mdl9t3p9b55wa8.webp", link:"https://s.shopee.com.br/8KpTJ1Tpbc", favorite:79 },
+  { id:"prod-30", name:"Tapioqueira com peneira e polvilhador", category:"cozinha", store:"shopee", price:21.00, oldPrice:50.00, note:"Cores sortidas.", image:"https://down-br.img.susercontent.com/file/br-11134201-820lq-mssfqdk8tatibc.webp", link:"https://s.shopee.com.br/9peH5pN2vV", favorite:79 },
+  { id:"prod-31", name:"Air fryer Asus 3,5 L, 1400 W", category:"eletrodomesticos", store:"shopee", price:179.46, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820mf-mqf4o93pccn705.webp", link:"https://s.shopee.com.br/3B7N9cC5Kd", favorite:79 },
+  { id:"prod-32", name:"Faqueiro Tramontina Búzios em inox, 24 peças", category:"cozinha", store:"mercadolivre", price:57.79, oldPrice:108.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_885228-MLA105354697197_012026-F.webp", link:"https://meli.la/21TK7G2", favorite:79 },
+  { id:"prod-33", name:"Jogo de 4 mexedores de coquetel em inox", category:"cozinha", store:"mercadolivre", price:21.00, oldPrice:28.36, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_609021-CBT115324278734_082026-F-jogo-4-mexedores-coquetel-aco-inoxidavel.webp", link:"https://meli.la/26p8WWX", favorite:79 },
+  { id:"prod-34", name:"Faqueiro Essenciale em inox, 24 peças", category:"cozinha", store:"mercadolivre", price:39.79, oldPrice:69.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_752054-MLA112678802966_062026-F.webp", link:"https://meli.la/2MvC58k", favorite:79 },
+  { id:"prod-35", name:"Kit 5 camisetas masculinas dry fit lisas", category:"moda", store:"mercadolivre", price:57.49, oldPrice:78.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_924532-MLB113519733931_062026-F-kit-5-camisetas-basicas-masculina-dry-fit-lisa-tradicional.webp", link:"https://meli.la/31jZg7e", favorite:79 },
+  { id:"prod-36", name:"Perfume árabe Sabah Al Ward Sugar feminino", category:"cosmeticos", store:"mercadolivre", price:114.32, oldPrice:259.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_899424-MLA115250899684_082026-F.webp", link:"https://meli.la/1UphZio", favorite:79 },
+  { id:"prod-37", name:"Frigideira grill de cerâmica 24 cm para indução", category:"cozinha", store:"mercadolivre", price:84.13, oldPrice:185.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_625026-MLA99522562228_122025-F.webp", link:"https://meli.la/1kK8uCS", favorite:79 },
+  { id:"prod-38", name:"Lixeira automática com sensor 16 L", category:"banheiro", store:"mercadolivre", price:69.99, oldPrice:259.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_886959-MLA112302699775_052026-F.webp", link:"https://meli.la/2iv9m3p", favorite:79 },
+  { id:"prod-39", name:"Caixa de som bluetooth grande com alto-falante de 8\"", category:"eletronicos", store:"mercadolivre", price:429.97, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_636256-MLA99984790479_112025-F.webp", link:"https://meli.la/1Et9K42", favorite:79 },
+  { id:"prod-40", name:"Kit 1200 lenços umedecidos Baby Club aloe vera", category:"infantil", store:"mercadolivre", price:67.00, oldPrice:89.10, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_901534-MLB111187215833_052026-F.webp", link:"https://meli.la/1vKa4nf", favorite:79 },
+  { id:"prod-41", name:"Kit 3 leggings modeladoras fitness", category:"moda-fitness", store:"mercadolivre", price:54.62, oldPrice:64.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_968450-MLB83802436041_042025-F-kit-3-calcas-legging-empina-levanta-bumbum-fitness-academia.webp", link:"https://meli.la/1MohVeU", favorite:79 },
+  { id:"prod-42", name:"Kit 13 pincéis de maquiagem", category:"beleza", store:"mercadolivre", price:19.00, oldPrice:29.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_672781-MLA92082962837_092025-F.webp", link:"https://meli.la/1gSP3LL", favorite:79 },
+  { id:"prod-43", name:"Kit suqueira de vidro 2 L com torneira e 6 taças Diamond", category:"cozinha", store:"mercadolivre", price:151.11, oldPrice:325.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_719924-MLB115306802635_072026-F-kit-suqueira-vidro-2l-torneira--6-tacas-diamond-320ml.webp", link:"https://meli.la/23789iF", favorite:79 },
+  { id:"prod-44", name:"Perfume árabe Asad masculino 100 ml", category:"cosmeticos", store:"mercadolivre", price:78.99, oldPrice:149.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_940546-MLB108307909770_032026-F-perfume-arabe-asad-masculino-original-100ml-isabelle-parfum.webp", link:"https://meli.la/1DHz8tz", favorite:79 },
+  { id:"prod-45", name:"Jogo de panelas antiaderentes, 10 peças", category:"cozinha", store:"mercadolivre", price:163.92, oldPrice:269.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_897550-MLA111138894183_052026-F.webp", link:"https://meli.la/2L7H6Ya", favorite:79 },
+  { id:"prod-46", name:"Bicicleta elétrica Altrax 48 V, até 60 km", category:"esporte-lazer", store:"mercadolivre", price:6999.99, note:"O preço muda conforme a potência escolhida.", image:"https://http2.mlstatic.com/D_NQ_NP_2X_702844-MLB115488629536_082026-F-bicicleta-eletrica-altrax-350w-500w-1000w-48v-60km-mobility.webp", link:"https://meli.la/1wzizEi", favorite:79 },
+  { id:"prod-47", name:"Mop giratório com balde de 8 L e 2 refis", category:"limpeza", store:"mercadolivre", price:64.88, oldPrice:69.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_835854-MLB114259951052_082026-F-mop-esfregao-giratorio-com-balde-8-litros-cesto-inox-2-refil.webp", link:"https://meli.la/1tBUFbo", favorite:79 },
+  { id:"prod-48", name:"Kit 20 toucas de cetim antifrizz", category:"beleza", store:"mercadolivre", price:32.50, oldPrice:44.99, note:"Cores sortidas.", image:"https://http2.mlstatic.com/D_NQ_NP_2X_813759-MLU73003892512_112023-F.webp", link:"https://meli.la/1km4n8c", favorite:79 },
+  { id:"prod-49", name:"Chaveiro de bichinhos com textura de crochê", category:"presentes", store:"shopee", price:23.90, note:"O preço muda conforme o bichinho escolhido.", image:"https://down-br.img.susercontent.com/file/br-11134207-820m5-mmi3sgegjn5z0c.webp", link:"https://s.shopee.com.br/W6d6wnWqI", favorite:79 },
+  { id:"prod-50", name:"Percarbonato puro tira-manchas para roupas", category:"limpeza", store:"shopee", price:16.50, oldPrice:29.90, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820lm-mohh8j4tjpc0e3.webp", link:"https://s.shopee.com.br/5fojGWwqNx", favorite:79 },
+  { id:"prod-51", name:"Alvejante percarbonato de sódio Calisul sem cloro", category:"limpeza", store:"shopee", price:29.69, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820mf-ms6z4y7egao720.webp", link:"https://s.shopee.com.br/BTmjTQedE", favorite:79 },
+  { id:"prod-52", name:"Escorredor multiuso de inox com alça", category:"cozinha", store:"shopee", price:19.99, oldPrice:35.00, note:"O preço muda conforme o modelo escolhido.", image:"https://down-br.img.susercontent.com/file/sg-11134201-7raum-maefgpdqxf92be.webp", link:"https://s.shopee.com.br/9Ki1dLpjYt", favorite:79 },
+  { id:"prod-53", name:"Conjunto de banheiro 4 peças com tampa de bambu", category:"banheiro", store:"shopee", price:39.89, oldPrice:80.00, note:"Disponível em branco ou preto.", image:"https://down-br.img.susercontent.com/file/br-11134207-820l4-mojtz819oj5x0d.webp", link:"https://s.shopee.com.br/7fZneR5VLq", favorite:79 },
+  { id:"prod-54", name:"Kit 4 potes herméticos com tampa de bambu", category:"cozinha", store:"shopee", price:39.99, oldPrice:99.99, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-822x5-mo74eg768t8m85.webp", link:"https://s.shopee.com.br/1VzAJA9poX", favorite:79 },
+  { id:"prod-55", name:"Jogo de lençol 200 fios 100% algodão com elástico", category:"banho", store:"shopee", price:35.90, oldPrice:49.90, note:"O preço muda conforme o tamanho escolhido.", image:"https://down-br.img.susercontent.com/file/br-11134207-820m1-mqqa2tlepwqrc8.webp", link:"https://s.shopee.com.br/9V1RpzOk66", favorite:79 },
+  { id:"prod-56", name:"Potes de vidro natalinos 300 ml com tampa decorada", category:"natal", store:"shopee", price:37.90, oldPrice:40.99, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820m7-mrgd982nyf46e3.webp", link:"https://s.shopee.com.br/3VkEh7D1OM", favorite:79 },
+  { id:"prod-57", name:"Comedouro e bebedouro automático Jelplast 1 L", category:"pets", store:"shopee", price:48.95, oldPrice:64.90, note:"O preço muda conforme a cor escolhida.", image:"https://down-br.img.susercontent.com/file/br-11134207-820l7-mo396aca1a8111.webp", link:"https://s.shopee.com.br/LnCvNE7Xf", favorite:79 },
+  { id:"prod-58", name:"Kit hidratante corporal e body splash frutal", category:"cosmeticos", store:"shopee", price:32.50, oldPrice:44.99, note:"", image:"https://down-br.img.susercontent.com/file/sg-11134201-82627-mm3f14444umb20.webp", link:"https://s.shopee.com.br/LnCvNE7Xf", favorite:79 },
+  { id:"prod-59", name:"Kit body splash e hidratante de baunilha", category:"cosmeticos", store:"shopee", price:59.90, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820lr-mqb67c3hqjup76.webp", link:"https://s.shopee.com.br/3LQoUxs1AB", favorite:79 },
+  { id:"prod-60", name:"Short fitness suplex com bolso e cós alto", category:"moda-fitness", store:"shopee", price:40.93, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820lj-mmnt2i106o7b3d.webp", link:"https://s.shopee.com.br/4fwC5SLC7D", favorite:79 },
+  { id:"prod-61", name:"Kit 2 bermudas ciclistas com bolso e cintura alta", category:"moda-fitness", store:"shopee", price:47.30, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820m9-mmnveki2lqm8f1.webp", link:"https://s.shopee.com.br/6AkzsFo0lI", favorite:79 },
+  { id:"prod-62", name:"Kit 2 leggings suplex de cós alto sem transparência", category:"moda-fitness", store:"shopee", price:68.30, note:"", image:"https://down-br.img.susercontent.com/file/br-11134207-820me-mmnv6g1jz0g457.webp", link:"https://s.shopee.com.br/8fSKqt412y", favorite:79 },
+  { id:"prod-63", name:"Kit escorredor de inox para massas e arroz", category:"cozinha", store:"shopee", price:34.99, oldPrice:40.00, note:"O preço muda conforme o modelo escolhido.", image:"https://down-br.img.susercontent.com/file/br-11134207-820lq-mrf3k3p89ix36b.webp", link:"https://s.shopee.com.br/3VkEhQnLMn", favorite:79 },
+  { id:"prod-64", name:"Kit utensílios de silicone antiaderentes", category:"cozinha", store:"shopee", price:39.90, oldPrice:139.50, note:"O preço muda conforme o modelo escolhido.", image:"https://down-br.img.susercontent.com/file/br-11134207-820me-mneaqb9op8n481@resize_w900_nl.webp", link:"https://s.shopee.com.br/AAH8dnCCSY", favorite:79 },
+  { id:"prod-65", name:"Perfume Sedutor Árabe Sabah 100ml Original Feminino", category:"cosmeticos", store:"mercadolivre", price:111.20, oldPrice:230.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_753960-MLB78002610612_082024-F-perfume-sedutor-arabe-sabah-100ml-original-feminino.webp", link:"https://meli.la/1QU2ym9", favorite:79 },
+  { id:"prod-66", name:"Kit 3 Formas Para Bolo Torta Com Fundo Removível Antiaderente Aço Carbono Redondas Preto", category:"cozinha", store:"mercadolivre", price:34.28, oldPrice:59.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_664624-MLA88024980577_072025-F.webp", link:"https://meli.la/265gJCX", favorite:79 },
+  { id:"prod-67", name:"Ar-condicionado Hw Inverter Tcl T-pro 2.0 12.000 R32 Fr Cor Branco", category:"casa", store:"mercadolivre", price:1199.00, oldPrice:2679.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_645575-MLA100047352847_122025-F.webp", link:"https://meli.la/1v6HF8a", favorite:79 },
+  { id:"prod-68", name:"Ar Condicionado Split Inverter 9000 Btus Midea Branco", category:"casa", store:"mercadolivre", price:2152.00, oldPrice:1966.30, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_939417-MLA108123395905_032026-F.webp", link:"https://meli.la/2Zny5Yp", favorite:79 },
+  { id:"prod-69", name:"Ar Condicionado Split Inverter Philco 12000 Btus Frio 220v Branco", category:"casa", store:"mercadolivre", price:2257.90, oldPrice:3359.92, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_943951-MLA115203004645_072026-F.webp", link:"https://meli.la/18ZvbhC", favorite:79 },
+  { id:"prod-70", name:"Secador De Cabelo 5 Em 1 Escova De Ar Quente Modelador 110v", category:"beleza", store:"mercadolivre", price:102.08, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_967362-MLB115714871591_082026-F-secador-de-cabelo-5-em-1-escova-de-ar-quente-modelador-110v.webp", link:"https://meli.la/1s7KFyn", favorite:79 },
+  { id:"prod-71", name:"Celular Samsung Galaxy A17 Com Ia, 256gb, 8gb Ram, Câm De 50mp, Tela De 6.7 , Nfc, Ip54 - Preto 4G", category:"eletronicos", store:"mercadolivre", price:1099.10, oldPrice:1599.00, note:"O preço muda conforme a cor e o GB escolhidos.", image:"https://http2.mlstatic.com/D_NQ_NP_2X_781103-MLA99983064831_112025-F.webp", link:"https://meli.la/1W3JvZ4", favorite:79 },
+  { id:"prod-72", name:"Fritadeira Elétrica Air Fryer Quad Fry 4,2 L,1400w Preto Elgin", category:"cozinha", store:"mercadolivre", price:159.90, oldPrice:299.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_813389-MLA99520090726_112025-F.webp", link:"https://meli.la/2m2npJ5", favorite:79 },
+  { id:"prod-73", name:"Copo Térmico Gigante 1,2l Inox Com Tampa E Inox Canudo", category:"cozinha", store:"mercadolivre", price:46.00, oldPrice:99.98, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_850830-MLB116097001565_082026-F-copo-termico-gigante-12l-inox-com-tampa-e-inox-canudo.webp", link:"https://meli.la/1ucNsWB", favorite:79 },
+  { id:"prod-74", name:"Kit 10 Potes 750ml com Tampa Trava Plástico Transparente para Mantimentos e Alimentos", category:"cozinha", store:"mercadolivre", price:34.90, oldPrice:59.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_687922-MLA116726706091_082026-F.webp", link:"https://meli.la/1cMRTEN", favorite:79 },
+  { id:"prod-75", name:"Tablet Android 15 10 Polegadas 30Gb Ram+128Gb Rom, Octa-core, 6000mAh, com Capa Teclado E Mouse", category:"eletronicos", store:"mercadolivre", price:720.00, oldPrice:2000.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_931639-MLA116950836821_082026-F.webp", link:"https://meli.la/2PU5BPG", favorite:79 },
+  { id:"prod-76", name:"Pincel Maquiagem Profissionais Multifuncional Macio 15pcs", category:"beleza", store:"mercadolivre", price:35.99, oldPrice:51.42, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_999638-MLB94609829594_102025-F-pincel-maquiagem-profissionais-multifuncional-macio-15pcs.webp", link:"https://meli.la/1gAsrBe", favorite:79 },
+  { id:"prod-77", name:"Lava-Louças Brastemp 8 Serviços Inox - BLF08BS", category:"eletrodomesticos", store:"mercadolivre", price:1859.91, oldPrice:3500.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_820519-MLA99529786356_122025-F.webp", link:"https://meli.la/1q8spGq", favorite:79 },
+  { id:"prod-78", name:"Mixer Vertical Turbo Chef Elgin 3 Em 1 200w Preto 110v", category:"eletrodomesticos", store:"mercadolivre", price:93.06, oldPrice:99.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_651826-MLA99986263335_112025-F.webp", link:"https://meli.la/2naU33N", favorite:79 },
+  { id:"prod-79", name:"Laptop Infantil Educativo Spider Man Candide", category:"infantil", store:"mercadolivre", price:55.09, oldPrice:99.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_715063-MLA108928458188_032026-F.webp", link:"https://meli.la/2GUjdbN", favorite:79 },
+  { id:"prod-80", name:"Cesto de Roupa Suja de Bambu 60 Litros Dobrável com Tampa e Forro para Lavanderia", category:"casa", store:"mercadolivre", price:58.90, oldPrice:119.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_842494-MLA96419095420_102025-F.webp", link:"https://meli.la/1bDBQAV", favorite:79 },
+  { id:"prod-81", name:"Apple iPhone 16 (128 GB) - Ultramarine", category:"eletronicos", store:"mercadolivre", price:4499.10, oldPrice:7799.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_842494-MLA96419095420_102025-F.webp", link:"https://meli.la/1AsGQeF", favorite:79 },
+  { id:"prod-82", name:"Apple 2025 iPad Pro de 11 polegadas (Wi-Fi, de 512 GB, Vidro convencional) - Prateado (M5) ", category:"eletronicos", store:"mercadolivre", price:12664.15, oldPrice:14899.00, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_870433-MLA95062041264_102025-F.webp", link:"https://meli.la/2AbnNyM", favorite:79 },
+  { id:"prod-83", name:"Apple iPad 11 Chip A16 Wi-fi 128gb Cor Prateado - Distribuidor Autorizado", category:"eletronicos", store:"mercadolivre", price:4599.00, oldPrice:5954.94, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_830808-MLA96086344025_102025-F.webp", link:"https://meli.la/1AsGQeF", favorite:79 },
+  { id:"prod-84", name:"Secador Com Difusor Cachos Philco Super Potênte Oferta", category:"beleza", store:"mercadolivre", price:195.24, oldPrice:282.97, note:"", image:"hhttps://http2.mlstatic.com/D_NQ_NP_2X_685211-MLB82372383439_022025-F-secador-com-difusor-cachos-philco-super-potente-2200w-oferta.webp", link:"https://meli.la/2dDT21n", favorite:79 },
+  { id:"prod-85", name:"Caixa De Som Bluetooth Potente 50w Rgb Tws Usb Fm Portátil", category:"eletrodomesticos", store:"mercadolivre", price:94.64, oldPrice:204.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_660970-MLB92006132275_092025-F-caixa-de-som-bluetooth-potente-50w-rgb-tws-usb-fm-portatil.webp", link:"https://meli.la/2i1nkNh", favorite:79 },
+  { id:"prod-86", name:"Camiseta New Era New York Yankees Preto", category:"moda", store:"mercadolivre", price:68.99, oldPrice:129.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_819262-MLB113305837311_062026-F-camiseta-new-era-new-york-yankees-preto.webp", link:"https://meli.la/1J7pmfw", favorite:79 },
+  { id:"prod-87", name:"Kit 3 Pares Meia Boneco Magr Academia Maromba Treino Corrida ", category:"moda-fitness", store:"mercadolivre", price:24.99, oldPrice:29.99, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_733340-MLB113972715388_072026-F-kit-3-pares-meia-boneco-magr-academia-maromba-treino-corrida.webp", link:"https://meli.la/1G9bDPZ", favorite:79 },
+  { id:"prod-88", name:"Calça Jeans Pantalona Wide Leg Feminina Cintura Alta Larga", category:"moda", store:"mercadolivre", price:63.55, oldPrice:109.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_775248-MLB117132873123_092026-F-calca-jeans-pantalona-wide-leg-feminina-cintura-alta-larga.webp", link:"https://meli.la/2F2THJc", favorite:79 },
+  { id:"prod-84", name:"Secador Com Difusor Cachos Philco Super Potênte Oferta", category:"beleza", store:"mercadolivre", price:195.24, oldPrice:282.97, note:"", image:"hhttps://http2.mlstatic.com/D_NQ_NP_2X_685211-MLB82372383439_022025-F-secador-com-difusor-cachos-philco-super-potente-2200w-oferta.webp", link:"https://meli.la/2dDT21n", favorite:79 },
+  { id:"prod-85", name:"Caixa De Som Bluetooth Potente 50w Rgb Tws Usb Fm Portátil", category:"eletrodomesticos", store:"mercadolivre", price:94.64, oldPrice:204.90, note:"", image:"https://http2.mlstatic.com/D_NQ_NP_2X_660970-MLB92006132275_092025-F-caixa-de-som-bluetooth-potente-50w-rgb-tws-usb-fm-portatil.webp", link:"https://meli.la/2i1nkNh", favorite:79 },
+];
+
+/* =================================================================
+   FUNCIONAMENTO — não precisa mexer para cadastrar produtos
+   ================================================================= */
+const STORE = { shopee: "Shopee", mercadolivre: "Mercado Livre" };
+const STORE_PREP = { shopee: "na", mercadolivre: "no" };
+const PER_PAGE = 12;
+const state = { cat: "", store: "", price: "", sort: "desconto", query: "", shown: PER_PAGE, showcase: "" };
+
+const money = v => (v || v === 0) ? v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) : "—";
+const off = p => (p.oldPrice && p.oldPrice > p.price) ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+function itemHTML(p){
+  const d = off(p), href = p.link || "#";
+  const rel = 'rel="nofollow sponsored noopener" target="_blank"';
+  return `
+  <article class="item">
+    <a class="item__media" href="${esc(href)}" ${rel} aria-label="${esc(p.name)}">
+      ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : ""}
+      ${d ? `<span class="item__off">−${d}%</span>` : ""}
+    </a>
+    <p class="item__store">${STORE[p.store]}</p>
+    <h3 class="item__name">${esc(p.name)}</h3>
+    ${p.note ? `<p class="item__note">${esc(p.note)}</p>` : ""}
+    <div class="item__price">
+      <span class="item__now">${money(p.price)}</span>
+      ${p.oldPrice ? `<span class="item__was">${money(p.oldPrice)}</span>` : ""}
+    </div>
+    <a class="btn btn--line btn--sm btn--full item__cta" href="${esc(href)}" ${rel}>Ver ${STORE_PREP[p.store]} ${STORE[p.store]}</a>
+  </article>`;
+}
+const fill = (el, list) => el.innerHTML = list.map(itemHTML).join("");
+
+/* --- vitrine por categoria: mostra TODOS os produtos da categoria --- */
+function renderShowcase(){
+  const list = state.showcase ? PRODUCTS.filter(p => p.category === state.showcase) : PRODUCTS;
+  fill(document.getElementById("showcase-grid"), list);
+  document.querySelectorAll("#cat-list button").forEach(b =>
+    b.classList.toggle("on", b.dataset.cat === state.showcase));
+}
+
+function renderCatList(){
+  const used = new Set(PRODUCTS.map(p => p.category));
+  const cats = CATEGORIES.filter(c => used.has(c.id));
+  document.getElementById("cat-list").innerHTML = [{ id: "", label: "Tudo" }, ...cats]
+    .map(c => `<li><button type="button" data-cat="${c.id}">${c.label}</button></li>`).join("");
+  const sel = document.getElementById("f-cat");
+  cats.forEach(c => sel.insertAdjacentHTML("beforeend", `<option value="${c.id}">${c.label}</option>`));
+}
+
+/* --- catálogo --- */
+function filtered(){
+  let list = PRODUCTS.filter(p => {
+    if (state.cat && p.category !== state.cat) return false;
+    if (state.store && p.store !== state.store) return false;
+    if (state.query && !p.name.toLowerCase().includes(state.query)) return false;
+    if (state.price){
+      const [min, max] = state.price.split("-").map(Number);
+      if (p.price < min || p.price > max) return false;
+    }
+    return true;
+  });
+  if (state.sort === "barato")   list.sort((a,b) => a.price - b.price);
+  if (state.sort === "caro")     list.sort((a,b) => b.price - a.price);
+  if (state.sort === "nome")     list.sort((a,b) => a.name.localeCompare(b.name, "pt-BR"));
+  if (state.sort === "desconto") list.sort((a,b) => off(b) - off(a) || b.favorite - a.favorite);
+  return list;
+}
+
+function renderCatalog(){
+  const list = filtered(), box = document.getElementById("catalog");
+  const visible = list.slice(0, state.shown);
+  if (!list.length){
+    box.classList.remove("grid");
+    box.innerHTML = `<div class="blank"><p>Nenhum achadinho com esses filtros.</p>
+      <button class="btn btn--line btn--sm" id="clear">Limpar filtros</button></div>`;
+    document.getElementById("clear").addEventListener("click", clearFilters);
+  } else {
+    box.classList.add("grid");
+    fill(box, visible);
+  }
+  document.getElementById("tally").textContent = `${list.length} ${list.length === 1 ? "item" : "itens"}`;
+  document.getElementById("load-more").style.display = list.length > visible.length ? "inline-flex" : "none";
+}
+
+function clearFilters(){
+  Object.assign(state, { cat: "", store: "", price: "", query: "", shown: PER_PAGE });
+  ["f-cat","f-store","f-price"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("search").value = "";
+  renderCatalog();
+}
+
+const goCatalog = () => document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+
+/* --- seções fixas --- */
+function renderRank(){
+  const top = [...PRODUCTS].sort((a,b) => b.favorite - a.favorite).slice(0, 5);
+  document.getElementById("rank").innerHTML = top.map((p,i) => `
+    <a href="${esc(p.link || "#")}" target="_blank" rel="nofollow sponsored noopener">
+      <span class="rank-num">${String(i+1).padStart(2,"0")}</span>
+      <span class="rank-thumb">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : ""}</span>
+      <span>
+        <span class="rank-name">${esc(p.name)}</span>
+        <span class="rank-store">${STORE[p.store]}</span>
+      </span>
+      <span class="rank-price">${money(p.price)}</span>
+    </a>`).join("");
+}
+
+function renderFixed(){
+  const deals = [...PRODUCTS].filter(p => off(p) >= 15).sort((a,b) => off(b) - off(a)).slice(0, 10);
+  fill(document.getElementById("deals"), deals.length ? deals : PRODUCTS.slice(0, 8));
+  fill(document.getElementById("rail-shopee"), PRODUCTS.filter(p => p.store === "shopee").slice(0, 8));
+  fill(document.getElementById("rail-meli"), PRODUCTS.filter(p => p.store === "mercadolivre").slice(0, 8));
+  renderRank();
+  // A foto do herói agora é fixa (o selo Shopee + Mercado Livre), não vem mais de um produto.
+}
+
+/* --- eventos --- */
+document.addEventListener("DOMContentLoaded", () => {
+  renderCatList();
+  renderShowcase();
+  renderFixed();
+  renderCatalog();
+
+  document.getElementById("cat-list").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    state.showcase = state.showcase === b.dataset.cat ? "" : b.dataset.cat;
+    renderShowcase();
+  });
+
+  document.getElementById("f-cat").addEventListener("change", e => { state.cat = e.target.value; state.shown = PER_PAGE; renderCatalog(); });
+  document.getElementById("f-store").addEventListener("change", e => { state.store = e.target.value; state.shown = PER_PAGE; renderCatalog(); });
+  document.getElementById("f-price").addEventListener("change", e => { state.price = e.target.value; state.shown = PER_PAGE; renderCatalog(); });
+  document.getElementById("f-sort").addEventListener("change", e => { state.sort = e.target.value; renderCatalog(); });
+  document.getElementById("load-more").addEventListener("click", () => { state.shown += PER_PAGE; renderCatalog(); });
+
+  const search = document.getElementById("search");
+  search.addEventListener("input", e => { state.query = e.target.value.trim().toLowerCase(); state.shown = PER_PAGE; renderCatalog(); });
+  search.addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); goCatalog(); } });
+
+  const sToggle = document.getElementById("search-toggle"), sBar = document.getElementById("searchbar");
+  sToggle.addEventListener("click", () => {
+    const open = sBar.classList.toggle("open");
+    sToggle.setAttribute("aria-expanded", open);
+    if (open) search.focus();
+  });
+
+  document.querySelectorAll("[data-all]").forEach(b => b.addEventListener("click", () => {
+    state.store = b.dataset.all; state.cat = ""; state.shown = PER_PAGE;
+    document.getElementById("f-store").value = state.store;
+    document.getElementById("f-cat").value = "";
+    renderCatalog(); goCatalog();
+  }));
+
+  const burger = document.getElementById("burger"), drawer = document.getElementById("drawer");
+  burger.addEventListener("click", () => {
+    const open = drawer.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open);
+  });
+  drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", () => drawer.classList.remove("open")));
+});
+</script>
+</body>
+</html>
