@@ -1676,7 +1676,7 @@ const goCatalog = () => document.getElementById("catalogo").scrollIntoView({ beh
 function renderRank(){
   const top = [...PRODUCTS].sort((a,b) => b.favorite - a.favorite).slice(0, 5);
   document.getElementById("rank").innerHTML = top.map((p,i) => `
-    <a href="${esc(p.link || "#")}" target="_blank" rel="nofollow sponsored noopener">
+    <a href="${esc(productURL(p))}">
       <span class="rank-num">${String(i+1).padStart(2,"0")}</span>
       <span class="rank-thumb">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : ""}</span>
       <span>
