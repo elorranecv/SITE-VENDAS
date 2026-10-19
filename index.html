@@ -303,6 +303,19 @@ h1, h2, h3, .serif{
   background:var(--sand-deep);
 }
 
+
+/* Página individual e compartilhamento */
+.product-detail{max-width:1100px;margin:0 auto;padding:60px var(--gutter) 90px}
+.product-detail__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:55px;align-items:start;margin-top:30px}
+.product-detail__image{background:var(--stone);aspect-ratio:3/4;display:flex;align-items:center;justify-content:center}
+.product-detail__image img{width:100%;height:100%;object-fit:contain;padding:24px}
+.product-detail__info h1{font-size:clamp(2rem,4vw,3.2rem);margin:14px 0 20px}
+.product-detail__info .item__now{font-size:1.8rem}
+.product-detail__info .btn{margin-top:18px}
+.product-share{margin-top:10px}
+.product-back{display:inline-block;border-bottom:1px solid var(--ink);font-size:12px}
+.item__share{margin-top:8px;font-size:11px;text-decoration:underline;text-underline-offset:3px;text-align:center;padding:8px}
+@media(max-width:700px){.product-detail__grid{grid-template-columns:1fr;gap:25px}.product-detail{padding-top:30px}}
 </style>
 </head>
 <body>
@@ -1526,12 +1539,57 @@ const money = v => (v || v === 0) ? v.toLocaleString("pt-BR", { style: "currency
 const off = p => (p.oldPrice && p.oldPrice > p.price) ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
+function productURL(p){
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  url.searchParams.set("produto", p.id);
+  return url.href;
+}
+function safeAffiliateLink(p){
+  try { const u = new URL(p.link); return ["https:","http:"].includes(u.protocol) ? u.href : ""; }
+  catch { return ""; }
+}
+function showProductPage(){
+  const id = new URLSearchParams(location.search).get("produto");
+  if (!id) return;
+  const p = PRODUCTS.find(x => x.id === id);
+  const main = document.querySelector("main");
+  if (!p){ main.innerHTML = `<section class="product-detail"><h1>Produto não encontrado</h1><p>Este achadinho pode ter sido removido.</p><a class="product-back" href="${esc(location.pathname)}">Voltar ao catálogo</a></section>`; return; }
+  const href = safeAffiliateLink(p);
+  const original = document.querySelector('meta[name="description"]');
+  document.title = `${p.name} | Achadinhos by Lo`;
+  if(original) original.content = `${p.name} — confira este achadinho no Achadinhos by Lo.`;
+  main.innerHTML = `<section class="product-detail">
+    <a class="product-back" href="${esc(location.pathname)}">← Voltar ao catálogo</a>
+    <div class="product-detail__grid">
+      <div class="product-detail__image">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}">` : ""}</div>
+      <div class="product-detail__info">
+        <p class="label">${esc(p.category)} · ${esc(STORE[p.store] || p.store)}</p>
+        <h1>${esc(p.name)}</h1>
+        ${p.note ? `<p>${esc(p.note)}</p>` : ""}
+        <div class="item__price"><span class="item__now">${money(p.price)}</span>${p.oldPrice ? `<span class="item__was">${money(p.oldPrice)}</span>` : ""}</div>
+        <p class="item__note">*Preço e disponibilidade podem mudar a qualquer momento.</p>
+        ${href ? `<a class="btn btn--full" href="${esc(href)}" target="_blank" rel="nofollow sponsored noopener">Ver oferta ${esc(STORE_PREP[p.store] || 'na')} ${esc(STORE[p.store] || p.store)}</a>` : `<p class="item__note">Link da oferta indisponível no momento.</p>`}
+        <button class="btn btn--line btn--full product-share" type="button" id="copy-product">Copiar link deste produto</button>
+        <p class="item__note">Link de afiliada: a loja parceira realiza a venda.</p>
+      </div>
+    </div>
+  </section>`;
+  document.getElementById("copy-product").addEventListener("click", e => copyProductLink(productURL(p), e.currentTarget));
+  document.querySelectorAll('.quick-tags,.announce').forEach(el => {el.style.display='none'});
+  window.scrollTo(0,0);
+}
+async function copyProductLink(url, button){
+  try { await navigator.clipboard.writeText(url); button.textContent = "Link copiado!"; }
+  catch { window.prompt("Copie o link do produto:",url); }
+}
 function itemHTML(p){
-  const d = off(p), href = p.link || "#";
+  const d = off(p), href = productURL(p);
   const rel = 'rel="nofollow sponsored noopener" target="_blank"';
   return `
   <article class="item">
-    <a class="item__media" href="${esc(href)}" ${rel} aria-label="${esc(p.name)}">
+    <a class="item__media" href="${esc(href)}" aria-label="${esc(p.name)}">
       ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : ""}
       ${d ? `<span class="item__off">−${d}%</span>` : ""}
     </a>
@@ -1543,7 +1601,8 @@ function itemHTML(p){
       <span class="item__now">${money(p.price)}</span>
       ${p.oldPrice ? `<span class="item__was">${money(p.oldPrice)}</span>` : ""}
     </div>
-    <a class="btn btn--line btn--sm btn--full item__cta" href="${esc(href)}" ${rel}>Ver ${STORE_PREP[p.store]} ${STORE[p.store]}</a>
+    <a class="btn btn--line btn--sm btn--full item__cta" href="${esc(href)}">Ver detalhes do produto</a>
+    <button type="button" class="item__share" data-product-id="${esc(p.id)}">Copiar link do produto</button>
   </article>`;
 }
 const fill = (el, list) => el.innerHTML = list.map(itemHTML).join("");
@@ -1640,6 +1699,13 @@ function renderFixed(){
 
 /* --- eventos --- */
 document.addEventListener("DOMContentLoaded", () => {
+  if (new URLSearchParams(location.search).has("produto")) { showProductPage(); return; }
+  document.addEventListener("click", e => {
+    const btn = e.target.closest("[data-product-id]");
+    if (!btn) return;
+    const p = PRODUCTS.find(p => p.id === btn.dataset.productId);
+    if (p) copyProductLink(productURL(p), btn);
+  });
   renderCatList();
   renderShowcase();
   renderFixed();
