@@ -316,6 +316,10 @@ h1, h2, h3, .serif{
 .product-back{display:inline-block;border-bottom:1px solid var(--ink);font-size:12px}
 .item__share{margin-top:8px;font-size:11px;text-decoration:underline;text-underline-offset:3px;text-align:center;padding:8px}
 @media(max-width:700px){.product-detail__grid{grid-template-columns:1fr;gap:25px}.product-detail{padding-top:30px}}
+/* Links de categoria com a mesma aparência dos botões originais */
+.cat-row .category-link{font-family:var(--serif);font-size:1.35rem;letter-spacing:.01em;color:var(--ink-soft);padding:4px 2px;border-bottom:1px solid transparent;display:inline-block}
+.cat-row .category-link:hover,.cat-row .category-link.on{color:var(--ink);border-color:var(--ink)}
+.cat-row li:not(:last-child) .category-link::after{content:"/";display:inline-block;margin-left:16px;color:var(--line);font-size:1rem}
 </style>
 </head>
 <body>
@@ -1572,6 +1576,12 @@ const money = v => (v || v === 0) ? v.toLocaleString("pt-BR", { style: "currency
 const off = p => (p.oldPrice && p.oldPrice > p.price) ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
+function categoryURL(id){
+  const url = new URL(window.location.href);
+  url.search = ""; url.hash = "";
+  url.searchParams.set("categoria", id);
+  return url.href;
+}
 function productURL(p){
   const url = new URL(window.location.href);
   url.search = "";
@@ -1613,16 +1623,33 @@ function showProductPage(){
   document.querySelectorAll('.quick-tags,.announce').forEach(el => {el.style.display='none'});
   window.scrollTo(0,0);
 }
+function showCategoryPage(){
+  const id = new URLSearchParams(location.search).get("categoria");
+  if (!id) return;
+  const category = CATEGORIES.find(c => c.id.toLowerCase() === id.toLowerCase());
+  const main = document.querySelector("main");
+  if (!category){ main.innerHTML = `<section class="product-detail"><h1>Categoria não encontrada</h1><a class="product-back" href="${esc(location.pathname)}">Voltar ao início</a></section>`; return; }
+  const products = PRODUCTS.filter(p => p.category.toLowerCase() === category.id.toLowerCase());
+  document.title = `${category.label} | Achadinhos by Elo`;
+  main.innerHTML = `<section class="section"><div class="page">
+    <a class="product-back" href="${esc(location.pathname)}">← Ver todas as categorias</a>
+    <div class="section-top" style="margin-top:32px"><div><p class="label">Achadinhos por categoria</p><h1 class="title">${esc(category.label)}</h1><p>Confira os produtos e clique para comprar diretamente na loja parceira.</p></div></div>
+    <div class="grid" id="category-products"></div>
+  </div></section>`;
+  fill(document.getElementById("category-products"), products);
+  document.querySelectorAll('.quick-tags').forEach(el => el.style.display='none');
+  window.scrollTo(0,0);
+}
 async function copyProductLink(url, button){
   try { await navigator.clipboard.writeText(url); button.textContent = "Link copiado!"; }
   catch { window.prompt("Copie o link do produto:",url); }
 }
 function itemHTML(p){
-  const d = off(p), href = productURL(p);
-  const rel = 'rel="nofollow sponsored noopener" target="_blank"';
+  const d = off(p), href = safeAffiliateLink(p) || "#";
+  const rel = 'rel="nofollow sponsored"';
   return `
   <article class="item">
-    <a class="item__media" href="${esc(href)}" aria-label="${esc(p.name)}">
+    <a class="item__media" href="${esc(href)}" ${href === "#" ? 'onclick="return false"' : rel} aria-label="${esc(p.name)}">
       ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">` : ""}
       ${d ? `<span class="item__off">−${d}%</span>` : ""}
     </a>
@@ -1634,7 +1661,7 @@ function itemHTML(p){
       <span class="item__now">${money(p.price)}</span>
       ${p.oldPrice ? `<span class="item__was">${money(p.oldPrice)}</span>` : ""}
     </div>
-    <a class="btn btn--line btn--sm btn--full item__cta" href="${esc(href)}">Ver detalhes do produto</a>
+    ${href !== "#" ? `<a class="btn btn--line btn--sm btn--full item__cta" href="${esc(href)}" ${rel}>Ver oferta na loja</a>` : `<span class="item__note">Oferta indisponível</span>`}
     <button type="button" class="item__share" data-product-id="${esc(p.id)}">Copiar link do produto</button>
   </article>`;
 }
@@ -1644,7 +1671,7 @@ const fill = (el, list) => el.innerHTML = list.map(itemHTML).join("");
 function renderShowcase(){
   const list = state.showcase ? PRODUCTS.filter(p => p.category === state.showcase) : PRODUCTS;
   fill(document.getElementById("showcase-grid"), list);
-  document.querySelectorAll("#cat-list button").forEach(b =>
+  document.querySelectorAll("#cat-list .category-link").forEach(b =>
     b.classList.toggle("on", b.dataset.cat === state.showcase));
 }
 
@@ -1652,7 +1679,7 @@ function renderCatList(){
   const used = new Set(PRODUCTS.map(p => p.category));
   const cats = CATEGORIES.filter(c => used.has(c.id));
   document.getElementById("cat-list").innerHTML = [{ id: "", label: "Tudo" }, ...cats]
-    .map(c => `<li><button type="button" data-cat="${c.id}">${c.label}</button></li>`).join("");
+    .map(c => `<li><a class="category-link" href="${esc(categoryURL(c.id))}" target="_blank" rel="noopener" data-cat="${esc(c.id)}">${esc(c.label)}</a></li>`).join("");
   const sel = document.getElementById("f-cat");
   cats.forEach(c => sel.insertAdjacentHTML("beforeend", `<option value="${c.id}">${c.label}</option>`));
 }
@@ -1709,7 +1736,7 @@ const goCatalog = () => document.getElementById("catalogo").scrollIntoView({ beh
 function renderRank(){
   const top = [...PRODUCTS].sort((a,b) => b.favorite - a.favorite).slice(0, 5);
   document.getElementById("rank").innerHTML = top.map((p,i) => `
-    <a href="${esc(productURL(p))}">
+    <a href="${esc(safeAffiliateLink(p) || "#")}" rel="nofollow sponsored">
       <span class="rank-num">${String(i+1).padStart(2,"0")}</span>
       <span class="rank-thumb">${p.image ? `<img src="${esc(p.image)}" alt="" loading="lazy">` : ""}</span>
       <span>
@@ -1732,13 +1759,14 @@ function renderFixed(){
 
 /* --- eventos --- */
 document.addEventListener("DOMContentLoaded", () => {
-  if (new URLSearchParams(location.search).has("produto")) { showProductPage(); return; }
   document.addEventListener("click", e => {
     const btn = e.target.closest("[data-product-id]");
     if (!btn) return;
     const p = PRODUCTS.find(p => p.id === btn.dataset.productId);
-    if (p) copyProductLink(productURL(p), btn);
+    if (p) copyProductLink(safeAffiliateLink(p) || productURL(p), btn);
   });
+  if (new URLSearchParams(location.search).has("categoria")) { showCategoryPage(); return; }
+  if (new URLSearchParams(location.search).has("produto")) { showProductPage(); return; }
   renderCatList();
   renderShowcase();
   renderFixed();
@@ -1747,19 +1775,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".tag-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const tag = btn.dataset.tag;
+      if (tag === "bts") { window.open(categoryURL("BTS"), "_blank", "noopener"); return; }
       state.tag = state.tag === tag ? "" : tag;
       state.shown = PER_PAGE;
       document.querySelectorAll(".tag-btn").forEach(b => b.classList.toggle("on", b.dataset.tag === state.tag));
       renderCatalog();
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
     });
-  });
-
-  document.getElementById("cat-list").addEventListener("click", e => {
-    const b = e.target.closest("button");
-    if (!b) return;
-    state.showcase = state.showcase === b.dataset.cat ? "" : b.dataset.cat;
-    renderShowcase();
   });
 
   document.getElementById("f-cat").addEventListener("change", e => { state.cat = e.target.value; state.shown = PER_PAGE; renderCatalog(); });
